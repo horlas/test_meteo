@@ -1,0 +1,93 @@
+openapi: "3.0.2"
+info:
+
+
+
+paths:
+  /peaks:
+    parameters:
+      - in: query
+        name: geographical bounding box
+        schema:
+          type: string
+
+
+    get:
+      summary: Get list of peaks in a geographical bouding box
+      responses:
+        200:
+          description: a set of informations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                
+    post:
+      summary: post new peak️
+      description: 
+      responses:
+        201:
+          description: 'The peak was created'
+          content:
+            application/json:
+              schema:
+                $ref: 
+              example: {
+              }  
+        501:
+          description: 'Not implemented'
+
+  /peaks/{peakid}:
+    parameters:
+    - in: path
+      name: peakid
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Get detail of peak
+      responses:
+        200:
+          description: a set of informations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+ 
+    patch:
+      summary: Update data
+      description: Update data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              readOnly: 
+      responses:
+        200:
+          description: 'the peak is updated'
+          content:
+            application/json:
+              schema:
+        404:
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+
+    delete:
+      summary: Delete peak
+      description: This action deletes the peak and its data
+      responses:
+        200:
+          description: 'Peak is deleted'
+        404:
+          description: 'Not found'
+            
+    
+
+
+  
+        501:
+          description: 'Not implemented'
