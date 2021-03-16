@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  db:
+    container_name: mountainpeaks_database
+    image: postgres
+    expose:
+      - 5433 # Publishes 5433 to other containers but NOT to host machine
+    ports:
+      - 5433:5433
+    volumes:
+      - /home/aurelia/Documents/meteo/db/pgdata:/var/lib/postgresql/data:rw
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=db
+    command: -p 5433
+    restart: always
+
+  backend:
+    container_name: mountainpeaks_backend
+    build: ./backend
+    entrypoint: "sh /src_backend/docker-entrypoint.sh"
+    volumes:
+      - ./backend/:/src_backend
+      - /home/aurelia/Documents/meteo/db/pgdata:/_tmpdata:rw
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8001:8001
+    restart: always
+    depends_on:
+      - db
+
+#  networks:
+#    main:
+#      driver: bridge
